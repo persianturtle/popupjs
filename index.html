@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Popup/Modal Library Example</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <!-- Highlight JS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" href="popup.css">
+  <style>
+    /* Custom styles for all popups including the `basic` example */
+    body.interstitial .popup > .content {
+      border: 1px solid #e8e8e8;
+      background-color: #fdfdfe;
+    }
+
+    body.interstitial .popup > .content h1 {
+      color: #009fdf;
+    }
+
+    body.interstitial .popup > .content p {
+      color: #4e4e4e;
+    }
+
+    body.interstitial .popup > .content li {
+      margin-bottom: 10px;
+    }
+
+    @media only screen and (max-width: 767px) {
+      body.interstitial .popup > .content {
+        width: 90vw;
+        padding: 4.6875vw;
+        margin: 15vh auto;
+        box-sizing: border-box;
+      }
+
+      body.interstitial .popup > .content h1 {
+        font-size: 7.5vw;
+        line-height: 9.375vw;
+        margin-bottom: 4.6875vw;
+      }
+
+      body.interstitial .popup > .content p {
+        font-size: 5vw;
+        line-height: 6.5625vw;
+        margin-bottom: 3.125vw;
+      }
+
+      body.interstitial .popup > .content .close {
+        font-size: 7.5vw;
+        padding: 0 1.5625vw;
+      }
+    }
+    
+    @media only screen and (min-width: 768px) {
+      body.interstitial .popup > .content {
+        width: 45vw;
+        padding: 2.3333vw;
+        margin: 15vh 0;
+      }
+
+      body.interstitial .popup > .content > h1 {
+        margin-bottom: 1.04166667vw;
+      }
+
+      body.interstitial .popup > .content > p {
+        font-size: 1.11111111vw;
+        line-height: 1.38888889vw;
+        margin-bottom: 0.69444444vw;
+      }
+
+      body.interstitial .popup > .content .close {
+        font-size: 2.08333333vw;
+        line-height: 2.08333333vw;
+      }
+    }
+
+    /* Popup styles for the `full-size` example */
+    body.interstitial .popup.full-size > .content {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Popup styles for the `video` example */
+    body.interstitial .popup.video {
+      display: flex !important; align-items: center;
+    }
+
+    body.interstitial .popup.video > .content {
+      position: relative;
+      background: none;
+      width: 100%;
+      height: auto;
+      max-width: 964px;
+      margin: 5vh 0;
+      padding: 0;
+      border: 0;
+    }
+
+    body.interstitial .popup.video > .content >  .wrapper {
+      padding-top: 56.25%;
+    }
+
+    body.interstitial .popup.video > .content >  .wrapper > video, iframe {
+      position: absolute; top: 0; left: 0;
+      background-color: black;
+      width: 100%;
+      height: 100%;
+      outline: 0;
+      border: 0;
+    }
+
+    /* Demo page styles */
+    body {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      margin: 0;
+    }
+
+    header {
+      background-color: dodgerblue;
+      border-bottom: 1px solid #cccccc;
+      padding: 20px;
+    }
+
+    header > h1 {
+      font-size: 18px;
+      font-weight: normal;
+      color: white;
+      text-align: center;
+      margin: 0;
+    }
+
+    main ol {
+      max-width: 600px;
+    }
+
+    main ol li, main ul li {
+      margin-bottom: 10px;
+    }
+
+    dd {
+      margin: 0;
+    }
+
+    dt {
+      margin: 5px 0 0 30px;
+    }
+
+    a {
+      cursor: pointer;
+      color: blue;
+      text-decoration: underline;
+    }
+
+    code {
+      padding: 2px 4px;
+      color: #bd4147;
+      background-color: #f7f7f9;
+      border-radius: 3px;
+    }
+
+    @media only screen and (max-width: 1199px) {
+      main {
+        padding: 15px;
+      }
+    }
+
+    @media only screen and (min-width: 1200px) {
+      main {
+        display: grid;
+        grid-gap: 15px;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+        padding: 30px;
+      }
+
+      main > section {
+        background-color: #ececec;
+        padding: 15px;
+      }
+
+      main > section > h1 {
+        font-size: 16px;
+      }
+
+      main > .goals {
+        grid-column: 1 / span 4;
+      }
+
+      main > .examples {
+        grid-column: 5 / span 2;
+        grid-row: 1;
+      }
+
+      main > .features {
+        grid-column: 1 / span 2;
+        grid-row: 2;
+      }
+
+      main > .installation {
+        grid-column: 3 / span 4;
+        grid-row: 2;
+      }
+
+      main > .usage {
+        grid-column: 1 / span 3;
+        grid-row: 3;
+      }
+
+      main > .options {
+        grid-column: 4 / span 3;
+        grid-row: 3;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>a Popup Library for designers & developers</h1>
+  </header>
+  <main>
+    <section class="goals">
+      <h1>Philosphy & Goals</h1>
+      <p>Are you comfortable writing CSS/JS? This popup library is for you! </p>
+      <p>The goals for this project are to:</p>
+      <ol>
+        <li><strong>make styling easy</strong> without needing to overwrite a bunch of CSS</li>
+        <li><strong>allow custom functionality</strong> with access to the raw <code>event</code> that triggered a popup's opening/closing</li>
+        <li><strong>have no dependencies</strong> with support for modern browsers</li>
+        <li><strong>handle the basic stuff</strong> like animations, overlays and preventing body scrolling while open</li>
+      </ol>
+    </section>
+    <section class="examples">
+      <h1>Examples</h1>
+      <ul>
+        <li>
+          <p><a class="trigger basic">Basic</a></p>
+        </li>
+        <li>
+          <p><a class="trigger full-size">Full-size</a></p>
+        </li>
+        <li>
+          <p>
+            This
+            <a video="https://vimeo.com/groups/freehd/videos/136920991">video popup</a>
+            uses a custom function to set an
+            <code>iframe's source</code>
+            from it's trigger's
+            <code>video</code> attribute:
+            <pre style="cursor: pointer;" video="https://vimeo.com/groups/freehd/videos/136920991"><code>&lt;a video="https://vimeo.com/groups/freehd/videos/136920991">video popup&lt;/a&gt;</code></pre>
+          </p>
+        </li>
+        <li>
+          <p>Show an <strong>interstitial</strong> when users click on an <a class="trigger interstitial" href="https://www.google.com">external link</a>. This uses <code>event.target.href</code> to get the link's URL.</p>
+        </li>
+        <li>Show a popup to visitors before accessing a <a href="learn.html">url</a>, unless there exists a certain <strong>cookie</strong> in the user's browser with an appropriate value. Click <a href="learn.html">here</a> to learn more.</li>
+      </ul>
+    </section>
+    <section class="features">
+      <h1>Features</h1>
+      <ul>
+        <li><p>Allows custom functions to be executed before/after opening/closing with access to the <code>event</code> that triggered a popup's opening/closing</p></li>
+        <li><p>Opening & closing animations</p></li>
+        <li><p>Disable <code>body</code> scrolling when a popup is open</p></li>
+        <li><p>Automatically closes existing popups before opening new ones</p></li>
+        <li><p>Easy styling with minimum default styles</p></li>
+        <li><p>Can be used for all types of popups (see examples)</p></li>
+      </ul>
+    </section>
+    <section class="installation">
+      <h1>Getting Started</h1>
+      <ol>
+        <li>Include both <code>popup.js</code> and <code>popup.css</code>. Both, combined is around 1kb minified & gzipped.</li>
+        <li>
+          Include a popup's HTML with the following wrapper:
+<pre><code>&lt;div class="popup className"&gt;
+  &lt;div class="content"&gt;
+  [your popup's HTML here]
+  &lt;/div&gt;
+  &lt;button class="close"&gt;&times;&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+        </li>
+        <li>Register the popup by calling the register function:
+          <pre><code>window.popup.register("className")</code></pre>
+        </li>
+        <li>Add custom CSS for your popup. This library provides almost no default styling. It does handle the popup animation as well as the tinted overlay. The rest is up to you!</li>
+        <li>See the "Usage & Options" section below for all available options.</li>
+      </ol>
+    </section>
+    <section class="usage">
+      <h1>Usage</h1>
+      <p>This library exposes three functions:</p>
+      <ol>
+        <li>
+          <code>window.popup.register(<i>className[, options]</i>)</code>
+          <p><strong>Parameters:</strong></p>
+          <dl>
+            <dd><code>className</code></dd>
+            <dt>
+              <i>string</i>
+              <p>
+                By default, the class name of the popup element:
+                <pre><code>&lt;div class="popup className"&gt;</code></pre>
+                as well as the class names of the trigger elements:
+                <pre><code>&lt;a class="trigger className"&gt;</code></pre>
+              </p> 
+            </dt>
+            <dd><code>options</code></dd>
+            <dt>
+              <i>object</i>
+              <p>See a full list of options in the <i>options</i> section.</p>
+            </dt>
+          </dl>
+          <p><strong>Return value:</strong></p>
+          <dl>
+            <dd><code>popup</code></dd>
+            <dt>
+              <i>object</i>
+              <p>An object with the following shape:</p>
+<pre><code>
+  {
+    triggers: <i>NodeList</i>,
+    element: <i>Node</i>,
+    ...options
+  }
+</code></pre>
+            </dt>
+          </dl>
+
+        </li>
+        <li>
+          <code>window.popup.open(<i>popup[, event]</i>)</code>
+          <p><strong>Parameters:</strong></p>
+          <dl>
+            <dd><code>popup</code></dd>
+            <dt>
+              <i>object</i>
+              <p>The popup object returned from <code>window.popup.register</code>.</p>
+            </dt>
+            <dd><code>event</code></dd>
+            <dt>
+              <i>event</i>
+              <p>The event that triggered a popup's opening.</p>
+            </dt>
+          </dl>
+        </li>
+        <li>
+          <code>window.popup.close(<i>popup[, event]</i>)</code>
+          <p><strong>Parameters:</strong></p>
+          <dl>
+            <dd><code>popup</code></dd>
+            <dt>
+              <i>object</i>
+              <p>The popup object returned from <code>window.popup.register</code>.</p>
+            </dt>
+            <dd><code>event</code></dd>
+            <dt>
+              <i>event</i>
+              <p>The event that triggered a popup's closing.</p>
+            </dt>
+          </dl>
+        </li>
+      </ol>
+    </section>
+    <section class="options">
+      <h1>Options</h1>
+      <dl>
+        <dd><code>triggers</code></dd>
+        <dt>
+          <p><i>NodeList</i></p>
+          <p>
+            Overwrite the default NodeList of:
+            <pre><code>document.querySelectorAll(".trigger.className")</code></pre>
+            where <code>className</code> is the first argument passed to the <code>register</code> function.
+          </p>
+        </dt>
+        <dd><code>element</code></dd>
+        <dt>
+          <p><i>Node</i></p>
+          <p>
+            Overwrite the default Node of:
+            <pre><code>document.querySelector(".popup.className")</code></pre>
+            where <code>className</code> is the first argument passed to the <code>register</code> function.
+          </p>
+        </dt>
+        <dd><code>preventCloseOnOutsideClick</code></dd>
+        <dt>
+          <p><i>boolean</i></p>
+          <p>If true, clicking outside of the popup's <code>.content</code> will not close the popup. Default: <code>false</code>.</p>
+        </dt>
+        <dd><code>center</code></dd>
+        <dt>
+          <p><i>boolean</i></p>
+          <p>If true, the popup will be vertically centered. Default: <code>false</code>.</p>
+        </dt>
+        <dd><code>beforeOpen</code></dd>
+        <dt>
+          <p><i>function</i></p>
+          <p>A function that will be executed immediately before a popup opens. The function will be passed in the event that opened the popup.</p>
+        </dt>
+        <dd><code>afterOpen</code></dd>
+        <dt>
+          <p><i>function</i></p>
+          <p>A function that will be executed immediately after a popup opens. The function will be passed in the event that opened the popup.</p>
+        </dt>
+        <dd><code>beforeClose</code></dd>
+        <dt>
+          <p><i>function</i></p>
+          <p>A function that will be executed immediately before a popup closes. The function will be passed in the event that closed the popup.</p>
+        </dt>
+        <dd><code>afterClose</code></dd>
+        <dt>
+          <p><i>function</i></p>
+          <p>A function that will be executed immediately after a popup closes. The function will be passed in the event that closed the popup.</p>
+        </dt>
+      </dl>
+    </section>
+  </main>
+
+  <!-- basic -->
+  <div class="popup basic">
+    <div class="content">
+      <h1>Basic Example</h1>
+      <p>
+        To replicate this example, follow these steps:
+
+        <ul>
+          <li>Include:
+            <code class="html">popup.js (< 700 bytes minified & gzipped)</code>
+          </li>
+          <li>Include:
+            <code class="html">popup.css (< 300 bytes minified & gzipped)</code>
+          </li>
+          <li>Add the following HTML for your popup:
+<pre><code>&lt;div class="popup className"&gt;
+  &lt;div class="content"&gt;
+    [your popup's HTML here]
+  &lt;/div&gt;
+  &lt;button class="close"&gt;&times;&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+          </li>
+          <li>Register the popup by calling the register function:
+            <pre><code>window.popup.register("className")</code></pre>
+          </li>
+          <li>Add custom CSS for your popup. This library provides almost no default styling. It does handle the popup animation as well as the tinted overlay. The rest is up to you!</li>
+          <li>See the "Usage & Options" section below for all available options.</li>
+        </ul>
+      </p>
+      <button class="close">&times;</button>
+    </div>
+  </div>
+
+  <!-- full-size -->
+  <div class="popup full-size">
+    <div class="content">
+      <p>This is example isn't much different than the <a class="trigger basic">basic example</a>. However, it's CSS includes the following:
+<pre><code>.content {
+  width: 100vw;
+  height: 100vh;
+}
+</code></pre>
+      </p>
+      <p>By the way, here's how you can run arbitrary functions at various points in a popup's lifecycle:</p>
+<pre><code>window.popup.register("full-size, {
+  beforeOpen: function (event) {
+    console.log("beforeOpen")
+  },
+  afterOpen: function (event) {
+    console.log("afterOpen")
+  },
+  beforeClose: function (event) {
+    console.log("beforeClose")
+  },
+  afterClose: function (event) {
+    console.log("afterClose")
+  }
+}")
+</code></pre>
+      <p>Each function is passed the <code>event</code> that triggered a popup's open/close. Check the console!</p>
+      <button class="close">&times;</button>
+    </div>
+  </div>
+
+  <!-- video -->
+  <div class="popup video">
+    <div class="content">
+      <div class="wrapper">
+        <iframe frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- interstitial -->
+  <div class="popup interstitial">
+    <div class="content">
+      <h1>You are leaving this site</h1>
+      <p>By clicking OK, you will leave this site and go to a third-party site. Or, whatever else you'd like to say.</p>
+      <a class="cta blue">
+        OK
+      </a>
+      <button class="close">&times;</button>
+    </div> 
+  </div>
+
+  <!-- cookie -->
+  <div class="popup cookie">
+    <div class="content">
+      <p>The following page is for those who want to learn about how to read/write cookies using this popup library.</p>
+      <p>Would you like to learn more?</p>
+      <a>Yes</a>
+      <a>No</a>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+
+  <script>
+  /* basic */
+  (function() {
+    window.popup.register("basic")
+  })();
+  </script>
+
+  <script>
+  /* full-size */
+  (function() {
+    window.popup.register("full-size", {
+      beforeOpen: function (event) {
+        console.log("beforeOpen")
+      },
+      afterOpen: function (event) {
+        console.log("afterOpen")
+      },
+      beforeClose: function (event) {
+        console.log("beforeClose")
+      },
+      afterClose: function (event) {
+        console.log("afterClose")
+      }
+    })
+  })();
+  </script>
+
+  <script>
+  /* video */
+  (function() {
+    var popup = window.popup.register("video", {
+      triggers: document.querySelectorAll("[video]"),
+      center: true,
+      beforeOpen,
+      beforeClose
+    });
+
+    function beforeOpen(event) {
+      popup.iframe = popup.element.querySelector("iframe");
+      popup.video = event.target.getAttribute("video");
+
+      if (!popup.video) {
+        popup.video = event.target.closest("[video]").getAttribute("video");
+      }
+
+      var vimeoRegex = /(vimeo(pro)?\.com)\/(?:[^\d]+)?(\d+)\??(.*)?$/;
+      var matches = vimeoRegex.exec(popup.video);
+
+      popup.iframe.src =
+        "https://player.vimeo.com/video/" + matches[3] + "?autoplay=1";
+    }
+
+    function beforeClose(event) {
+      popup.iframe.removeAttribute("src");
+    }
+  })();
+  </script>
+
+  <script>
+  /* interstitial */
+  (function() {
+    var popup = window.popup.register("interstitial", {
+      beforeOpen
+    });
+
+    popup.buttons = {
+      leave: popup.element.querySelector("a")
+    };
+
+    function beforeOpen(event) {
+      popup.href = event.target.getAttribute("href");
+
+      if (!popup.href) {
+        popup.href = event.target.parentElement.getAttribute("href");
+      }
+
+      popup.buttons.leave.setAttribute("href", popup.href);
+      popup.buttons.leave.setAttribute("target", "_blank");
+    }
+  })();
+  </script>
+
+  <script>
+  /* cookie */
+  (function() {
+    var popup = window.popup.register("cookie", {
+      triggers: [],
+      preventCloseOnOutsideClick: true
+    });
+
+    var triggers = document.querySelectorAll('[href="learn.html"]');
+    triggers.forEach(trigger => {
+      trigger.addEventListener("click", event => {
+        if (!getCookie("learn")) {
+          event.preventDefault();
+          event.stopPropagation();
+          window.popup.open(popup);
+        }
+      });
+    });
+
+    var buttons = {
+      learn: document.querySelector(".popup.cookie a:first-of-type"),
+      general: document.querySelector(".popup.cookie a:last-of-type")
+    };
+
+    var urls = {
+      general: "/popupjs",
+      learn: "/popupjs/learn.html"
+    };
+
+    if (window.location.pathname.indexOf(urls.learn) !== -1 && !getCookie("learn")) {
+      window.popup.open(popup);
+    }
+
+    buttons.general.addEventListener("click", function(event) {
+      if (window.location.pathname.indexOf(urls.learn) !== -1) {
+        window.location.href = urls.general;
+      }
+
+      window.popup.close(popup);
+    });
+
+    buttons.learn.addEventListener("click", function(event) {
+      document.cookie = "learn=true;path=/";
+
+      if (window.location.pathname.indexOf(urls.learn) === -1) {
+        window.location.href = urls.learn;
+      }
+
+      window.popup.close(popup);
+    });
+
+    function getCookie(name) {
+      var value = "; " + document.cookie;
+      var parts = value.split("; " + name + "=");
+      if (parts.length == 2)
+        return parts
+          .pop()
+          .split(";")
+          .shift();
+    }
+  })();
+  </script>
+</body>
+</html>
+
