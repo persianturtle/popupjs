@@ -50,7 +50,9 @@
 
   function open(popup, event) {
     if (popup.beforeOpen) {
-      popup.beforeOpen(event);
+      if (popup.beforeOpen(event) === false) {
+        return;
+      }
     }
 
     active.forEach(popup => {

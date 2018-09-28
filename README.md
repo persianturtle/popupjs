@@ -152,7 +152,7 @@ If true, the popup will be vertically centered. Default: `false`.
 
 _function_
 
-A function that will be executed immediately before a popup opens. The function will be passed in the event that opened the popup.
+A function that will be executed immediately before a popup opens. The function will be passed in the event that opened the popup. If the `beforeOpen` function returns `false`, the popup will not open.
 
 `afterOpen`
 
