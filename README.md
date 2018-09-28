@@ -13,33 +13,19 @@ The goals for this project are to:
 3.  **have no dependencies** with support for modern browsers
 4.  **handle the basic stuff** like animations, overlays and preventing body scrolling while open
 
-# Examples
-
-*   <a class="trigger basic">Basic</a>
-
-*   <a class="trigger full-size">Full-size</a>
-
-*   This <a video="https://vimeo.com/groups/freehd/videos/136920991">video popup</a> uses a custom function to set an `iframe's source` from it's trigger's `video` attribute:
-
-        <a video="https://vimeo.com/groups/freehd/videos/136920991">video popup</a>
-
-*   Show an **interstitial** when users click on an [external link](https://www.google.com). This uses `event.target.href` to get the link's URL.
-
-*   Show a popup to visitors before accessing a [url](learn.html), unless there exists a certain **cookie** in the user's browser with an appropriate value. Click [here](learn.html) to learn more.
-
 # Features
 
-*   Allows custom functions to be executed before/after opening/closing with access to the `event` that triggered a popup's opening/closing
+- Allows custom functions to be executed before/after opening/closing with access to the `event` that triggered a popup's opening/closing
 
-*   Opening & closing animations
+- Opening & closing animations
 
-*   Disable `body` scrolling when a popup is open
+- Disable `body` scrolling when a popup is open
 
-*   Automatically closes existing popups before opening new ones
+- Automatically closes existing popups before opening new ones
 
-*   Easy styling with minimum default styles
+- Easy styling with minimum default styles
 
-*   Can be used for all types of popups (see examples)
+- Can be used for all types of popups (see examples)
 
 # Getting Started
 
