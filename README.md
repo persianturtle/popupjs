@@ -46,7 +46,7 @@ The goals for this project are to:
 4.  Add custom CSS for your popup. This library provides almost no default styling. It does handle the popup animation as well as the tinted overlay. The rest is up to you!
 5.  See the "Usage & Options" section below for all available options.
 
-# Usage
+# API
 
 This library exposes three functions:
 
@@ -118,7 +118,7 @@ This library exposes three functions:
 
     The event that triggered a popup's closing.
 
-# Options
+## Options
 
 `triggers`
 
